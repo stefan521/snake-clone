@@ -5,6 +5,7 @@ public class Target{
      private int y;
      private int maxWidth;
      private int maxHeight;
+     private Random randomObj;
 
      public Target(int maxWidth, int maxHeight){
           this.maxWidth = maxWidth;
@@ -12,9 +13,9 @@ public class Target{
           spawn();
      }
 
-     public int spawn(){
-          x = nextInt(maxWidth);
-          y = nextInt(maxHeight);
+     public void spawn(){
+          x = randomObj.nextInt(maxWidth);
+          y = randomObj.nextInt(maxHeight);
      }
 
      public int getX(){

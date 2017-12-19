@@ -1,29 +1,40 @@
 import java.util.Random;
+import java.awt.Point;
 
 public class Target{
-     private int x;
-     private int y;
+     private Point position;
      private int maxWidth;
      private int maxHeight;
      private Random randomObj;
+     private int timeToLive;
 
-     public Target(int maxWidth, int maxHeight){
+     public Target(int maxWidth, int maxHeight, int timeToLive){
           this.maxWidth = maxWidth;
           this.maxHeight = maxHeight;
+          this.timeToLive = timeToLive;
           spawn();
      }
 
-     public void spawn(){
-          x = randomObj.nextInt(maxWidth);
-          y = randomObj.nextInt(maxHeight);
+     public void decreaseTimeToLive(){
+          timeToLive--;
      }
 
-     public int getX(){
-          return x;
+     public boolean isExpired(){
+          if(timeToLive <= 0)
+               return true;
+          return false;
      }
 
-     public int getY(){
-          return y;
+     public Point getPosition(){
+          return position;
+     }
+
+     private void spawn(){
+          randomObj = new Random();
+          position = new Point();
+          int x = randomObj.nextInt(maxWidth);
+          int y = randomObj.nextInt(maxHeight);
+          position.setLocation(x, y);
      }
 
 }

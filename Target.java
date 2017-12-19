@@ -29,6 +29,14 @@ public class Target{
           return position;
      }
 
+     public int getX(){
+          return (int)position.getX();
+     }
+
+     public int getY(){
+          return (int)position.getY();
+     }
+
      private void spawn(){
           randomObj = new Random();
           position = new Point();

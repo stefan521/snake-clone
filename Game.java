@@ -8,37 +8,36 @@ public class Game{
      private Board board;
      private Target target;
      private Timer timer;
-     private int boardHeight;
-     private int boardWidth;
 
      public Game(){
-          boardWidth = 30;
-          boardHeight = 30;
           initialise();
      }
 
      private void initialise(){
           snake = new Snake();
-          board = new Board(boardWidth, boardHeight);
-          target = new Target(boardWidth, boardHeight, 34);
+          board = new Board(snake);
+          target = new Target(board.getBoardWidth(), board.getBoardHeight(), 34);
+          board.setTarget(target);
           setTimer(150);
      }
 
      private void progress(){
-          System.out.println(snake);
           if(snakeCollectedTarget()){
                snake.grow();
+               target = new Target(board.getBoardWidth(),  board.getBoardHeight(), 34);
+               board.setTarget(target);
           }
           if(isGameOver()){
                timer.stop();
           } else {
                snake.move();
                if(target.isExpired()){
-                    target = new Target(boardWidth, boardHeight, 34);
+                    target = new Target(board.getBoardWidth(),  board.getBoardHeight(), 34);
+                    board.setTarget(target);
                }
                target.decreaseTimeToLive();
-               System.out.println(snake);
           }
+          board.repaint();
      }
 
      private boolean isGameOver(){
@@ -63,7 +62,7 @@ public class Game{
 
      private boolean snakeIsOutOfBound(){
           Point head = snake.getHead();
-          if(head.getX()>boardWidth || head.getY()>boardHeight ||
+          if(head.getX()>board.getBoardWidth() || head.getY()>board.getBoardHeight() ||
              head.getX()<0 || head.getY()<0){
                   return true;
              }

@@ -15,18 +15,17 @@ public class Snake{
      }
 
      public void changeDirection(int direction){
-          switch(direction){
-               case UP: directionHeading = UP;
-               case DOWN: directionHeading = DOWN;
-               case RIGHT: directionHeading = RIGHT;
-               case LEFT: directionHeading = LEFT;
-          }
+               if (direction==UP && directionHeading!=DOWN) {directionHeading = UP;}
+               if (direction==DOWN && directionHeading!=UP) {directionHeading = DOWN;}
+               if (direction==RIGHT && directionHeading!=LEFT) {directionHeading = RIGHT;}
+               if (direction==LEFT && directionHeading!=RIGHT) {directionHeading = LEFT;}
      }
 
      public void move(){
           moveHead();
-          if(capturedTarget)
+          if(capturedTarget){
                capturedTarget = false;
+          }
           else segments.remove(0);
      }
 

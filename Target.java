@@ -7,20 +7,26 @@ public class Target{
      private int maxHeight;
      private Random randomObj;
      private int timeToLive;
+     private int timeLived;
 
      public Target(int maxWidth, int maxHeight, int timeToLive){
           this.maxWidth = maxWidth;
           this.maxHeight = maxHeight;
           this.timeToLive = timeToLive;
+          randomObj = new Random();
+          position = new Point();
           spawn();
      }
 
-     public void decreaseTimeToLive(){
-          timeToLive--;
+     public void increaseTimeLived(){
+          timeLived++;
+          if(isExpired()){
+               spawn();
+          }
      }
 
      public boolean isExpired(){
-          if(timeToLive <= 0)
+          if(timeToLive == timeLived)
                return true;
           return false;
      }
@@ -37,11 +43,10 @@ public class Target{
           return (int)position.getY();
      }
 
-     private void spawn(){
-          randomObj = new Random();
-          position = new Point();
+     public void spawn(){
           int x = randomObj.nextInt(maxWidth);
           int y = randomObj.nextInt(maxHeight);
+          timeLived = 0;
           position.setLocation(x, y);
      }
 

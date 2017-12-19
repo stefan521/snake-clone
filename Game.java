@@ -2,8 +2,9 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 
-public class Game{
+public class Game {
      private Snake snake;
      private Board board;
      private Target target;
@@ -13,9 +14,16 @@ public class Game{
           initialise();
      }
 
+    public void steerSnake(int keyCode) {
+            if (keyCode == KeyEvent.VK_UP) {snake.changeDirection(snake.DOWN);}
+            else if (keyCode == KeyEvent.VK_DOWN) {snake.changeDirection(snake.UP);}
+            else if (keyCode == KeyEvent.VK_LEFT) {snake.changeDirection(snake.LEFT);}
+            else if (keyCode == KeyEvent.VK_RIGHT) {snake.changeDirection(snake.RIGHT);}
+    }
+
      private void initialise(){
           snake = new Snake();
-          board = new Board(snake);
+          board = new Board(snake, this);
           target = new Target(board.getBoardWidth(), board.getBoardHeight(), 34);
           board.setTarget(target);
           setTimer(150);
@@ -24,20 +32,15 @@ public class Game{
      private void progress(){
           if(snakeCollectedTarget()){
                snake.grow();
-               target = new Target(board.getBoardWidth(),  board.getBoardHeight(), 34);
-               board.setTarget(target);
+               target.spawn();
           }
           if(isGameOver()){
                timer.stop();
           } else {
                snake.move();
-               if(target.isExpired()){
-                    target = new Target(board.getBoardWidth(),  board.getBoardHeight(), 34);
-                    board.setTarget(target);
-               }
-               target.decreaseTimeToLive();
+               target.increaseTimeLived();
           }
-          board.repaint();
+          board.updateGui();
      }
 
      private boolean isGameOver(){

@@ -1,28 +1,25 @@
 import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
 
 public class Board extends JPanel{
-     private JFrame containerJF;
      private int boardWidth;
      private int boardHeight;
      private int squareSize;
      private Snake snake;
      private Target target;
-     private Game game;
+     private Color bgColor;
+     private Color snakeBodyColor;
+     private Color snakeHeadColor;
+     private Color targetColor;
+     private Color borderColor;
 
-     public Board(Snake snake, Game game){
-          setBoardDims();
+     public Board(Snake snake){
+          initialiseBoard();
           this.snake = snake;
-          this.game = game;
-          setFrame();
      }
 
      public int getBoardWidth(){
@@ -43,23 +40,28 @@ public class Board extends JPanel{
 
      public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int snakeThickness = squareSize-2;
+        drawBorders(g);
 
-        g.setColor(Color.RED);
+        g.setColor(targetColor);
         if(target != null){
-             g.fillRect(target.getX()*squareSize, target.getY()*squareSize, squareSize, squareSize);
+             int targetX = target.getX()*squareSize;
+             int targetY = target.getY()*squareSize;
+             g.fillRect(targetX, targetY, snakeThickness, snakeThickness);
         }
 
         for(Point segment : snake.getSegments()){
-             g.setColor(new Color(243, 0, 187));
+             g.setColor(snakeBodyColor);
+             int snakeX = (int)segment.getX()*squareSize;
+             int snakeY = (int)segment.getY()*squareSize;
              if(snake.getHead().equals(segment))
-                  g.setColor(new Color(117,117,247));
-             g.fillRect((int)segment.getX()*squareSize, (int)segment.getY()*squareSize, squareSize, squareSize);
+                  g.setColor(snakeHeadColor);
+             g.fillRect(snakeX, snakeY , snakeThickness, snakeThickness);
         }
-        drawBorders(g);
     }
 
     private void drawBorders(Graphics g){
-         g.setColor(Color.yellow);
+         g.setColor(borderColor);
          for(int i = 0; i <=boardWidth; i++){
               g.fillRect(i*squareSize, (boardHeight)*squareSize, squareSize, squareSize);
               g.fillRect((boardWidth)*squareSize, i*squareSize, squareSize, squareSize);
@@ -68,37 +70,16 @@ public class Board extends JPanel{
          }
     }
 
-     private void setFrame(){
-          containerJF = new JFrame("snake");
-          containerJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          containerJF.setSize(625, 675);
-          containerJF.setResizable(false);
-          containerJF.setLayout(new BorderLayout());
-          containerJF.add(this, BorderLayout.CENTER);
-          containerJF.add(new JLabel("score"), BorderLayout.NORTH);
-          setFrameListener();
-          containerJF.setVisible(true);
-     }
-
-     private void setBoardDims(){
+     private void initialiseBoard(){
           boardWidth = 30;
           boardHeight = 30;
           squareSize = 20;
-          setBackground(Color.BLACK);
-     }
-
-     private void setFrameListener(){
-          containerJF.addKeyListener(new KeyListener(){
-               @Override
-               public void keyPressed(KeyEvent e) {
-                   game.steerSnake(e.getKeyCode());
-              }
-              @Override
-              public void keyTyped(KeyEvent e) {}
-              @Override
-              public void keyReleased(KeyEvent e){}
-
-          });
+          bgColor = new Color(0, 0, 0);
+          borderColor = new Color(122, 131, 145);
+          snakeBodyColor = new Color(27, 104, 229);
+          snakeHeadColor = new Color(117,117,247);
+          targetColor = new Color(131, 211, 97);
+          setBackground(bgColor);
      }
 
 }

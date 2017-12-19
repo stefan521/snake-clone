@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Target{
      private Point position;
@@ -8,6 +9,7 @@ public class Target{
      private Random randomObj;
      private int timeToLive;
      private int timeLived;
+     private ArrayList<Point> restrictedPoints;
 
      public Target(int maxWidth, int maxHeight, int timeToLive){
           this.maxWidth = maxWidth;
@@ -15,7 +17,12 @@ public class Target{
           this.timeToLive = timeToLive;
           randomObj = new Random();
           position = new Point();
+          restrictedPoints = new ArrayList<Point>();
           spawn();
+     }
+
+     public void setRestrictedPoints(ArrayList<Point> pointList){
+          restrictedPoints = pointList;
      }
 
      public void increaseTimeLived(){
@@ -46,11 +53,24 @@ public class Target{
      public void spawn(){
           int x = randomObj.nextInt(maxWidth);
           int y = randomObj.nextInt(maxHeight);
+          Point candidatePoint = new Point(x, y);
           timeLived = 0;
-          if(x == 0 || y == 0 || x == maxWidth || y == maxHeight){
+          if(x < 1 || y < 1 ||
+             x > maxWidth || y > maxHeight ||
+              isRestricted(candidatePoint)){
                spawn();
+          } else {
+               position.setLocation(candidatePoint);
           }
-          position.setLocation(x, y);
+
+     }
+
+     private boolean isRestricted(Point point){
+          for(Point restrictedP : restrictedPoints)
+               if(restrictedP.getX() == point.getX() &&
+                  restrictedP.getY() == point.getY())
+                  return true;
+          return false;
      }
 
 }

@@ -7,29 +7,46 @@ import java.awt.event.KeyEvent;
 public class Game {
      private Snake snake;
      private Board board;
+     private SnakeGUI gui;
      private Target target;
      private Timer timer;
+     private boolean keyPressedTisTurn;
 
      public Game(){
           initialise();
      }
 
     public void steerSnake(int keyCode) {
-            if (keyCode == KeyEvent.VK_UP) {snake.changeDirection(snake.DOWN);}
-            else if (keyCode == KeyEvent.VK_DOWN) {snake.changeDirection(snake.UP);}
-            else if (keyCode == KeyEvent.VK_LEFT) {snake.changeDirection(snake.LEFT);}
-            else if (keyCode == KeyEvent.VK_RIGHT) {snake.changeDirection(snake.RIGHT);}
+            if (keyCode == KeyEvent.VK_UP && !keyPressedTisTurn) {
+                 snake.changeDirection(snake.DOWN);
+                 keyPressedTisTurn = true;
+            }
+            else if (keyCode == KeyEvent.VK_DOWN && !keyPressedTisTurn) {
+                 snake.changeDirection(snake.UP);
+                 keyPressedTisTurn = true;
+            }
+            else if (keyCode == KeyEvent.VK_LEFT && !keyPressedTisTurn) {
+                 snake.changeDirection(snake.LEFT);
+                 keyPressedTisTurn = true;
+            }
+            else if (keyCode == KeyEvent.VK_RIGHT && !keyPressedTisTurn) {
+                 snake.changeDirection(snake.RIGHT);
+                 keyPressedTisTurn = true;
+            }
     }
 
      private void initialise(){
           snake = new Snake();
-          board = new Board(snake, this);
-          target = new Target(board.getBoardWidth(), board.getBoardHeight(), 34);
+          gui = new SnakeGUI(snake, this);
+          board = gui.getBoard();
+          target = new Target(board.getBoardWidth()-2, board.getBoardHeight()-2, 34);
+          target.setRestrictedPoints(snake.getSegments());
           board.setTarget(target);
           setTimer(150);
      }
 
      private void progress(){
+          keyPressedTisTurn = false;
           if(snakeCollectedTarget()){
                snake.grow();
                target.spawn();

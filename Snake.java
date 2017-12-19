@@ -37,10 +37,6 @@ public class Snake{
           return segments.get(segments.size()-1);
      }
 
-     public Point getTail(){
-          return segments.get(0);
-     }
-
      public int getSize(){
           return segments.size();
      }

@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
+import java.awt.BorderLayout;
 
 public class Board extends JPanel{
      private JFrame containerJF;
@@ -54,15 +55,27 @@ public class Board extends JPanel{
                   g.setColor(new Color(117,117,247));
              g.fillRect((int)segment.getX()*squareSize, (int)segment.getY()*squareSize, squareSize, squareSize);
         }
+        drawBorders(g);
+    }
 
+    private void drawBorders(Graphics g){
+         g.setColor(Color.yellow);
+         for(int i = 0; i <=boardWidth; i++){
+              g.fillRect(i*squareSize, (boardHeight)*squareSize, squareSize, squareSize);
+              g.fillRect((boardWidth)*squareSize, i*squareSize, squareSize, squareSize);
+              g.fillRect(i*squareSize, 0, squareSize, squareSize);
+              g.fillRect(0, i*squareSize, squareSize, squareSize);
+         }
     }
 
      private void setFrame(){
           containerJF = new JFrame("snake");
           containerJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          containerJF.setSize(600, 600);
+          containerJF.setSize(625, 675);
           containerJF.setResizable(false);
-          containerJF.add(this);
+          containerJF.setLayout(new BorderLayout());
+          containerJF.add(this, BorderLayout.CENTER);
+          containerJF.add(new JLabel("score"), BorderLayout.NORTH);
           setFrameListener();
           containerJF.setVisible(true);
      }
@@ -71,7 +84,7 @@ public class Board extends JPanel{
           boardWidth = 30;
           boardHeight = 30;
           squareSize = 20;
-          //setBackground(Color.BLACK);
+          setBackground(Color.BLACK);
      }
 
      private void setFrameListener(){

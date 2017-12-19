@@ -66,9 +66,9 @@ public class Snake{
 
      private void putSnakeOnStartPosition(){
           segments = new ArrayList<Point>();
-          segments.add(new Point(0,0));
-          segments.add(new Point(0,1));
-          segments.add(new Point(0,2));
+          segments.add(new Point(3,3));
+          segments.add(new Point(3,4));
+          segments.add(new Point(3,5));
           directionHeading = UP;
           capturedTarget = false;
      }

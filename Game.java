@@ -65,8 +65,8 @@ public class Game {
 
      private boolean snakeIsOutOfBound(){
           Point head = snake.getHead();
-          if(head.getX()>board.getBoardWidth() || head.getY()>board.getBoardHeight() ||
-             head.getX()<0 || head.getY()<0){
+          if(head.getX()>=board.getBoardWidth() || head.getY()>=board.getBoardHeight() ||
+             head.getX()<1 || head.getY()<1){
                   return true;
              }
           return false;

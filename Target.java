@@ -47,6 +47,9 @@ public class Target{
           int x = randomObj.nextInt(maxWidth);
           int y = randomObj.nextInt(maxHeight);
           timeLived = 0;
+          if(x == 0 || y == 0 || x == maxWidth || y == maxHeight){
+               spawn();
+          }
           position.setLocation(x, y);
      }
 

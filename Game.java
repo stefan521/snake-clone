@@ -39,7 +39,7 @@ public class Game {
           snake = new Snake();
           gui = new SnakeGUI(snake, this);
           board = gui.getBoard();
-          target = new Target(board.getBoardWidth()-2, board.getBoardHeight()-2, 34);
+          target = new Target(board.getBoardWidth()-2, board.getBoardHeight()-2, 35);
           target.setRestrictedPoints(snake.getSegments());
           board.setTarget(target);
           setTimer(150);
@@ -50,6 +50,7 @@ public class Game {
           if(snakeCollectedTarget()){
                snake.grow();
                target.spawn();
+               gui.showScore(snake.getSize());
           }
           if(isGameOver()){
                timer.stop();
@@ -61,21 +62,8 @@ public class Game {
      }
 
      private boolean isGameOver(){
-          if(snakeCoiled()){
+          if(snake.isCoiled() || snakeIsOutOfBound()){
                return true;
-          }
-          if(snakeIsOutOfBound()){
-               return true;
-          }
-          return false;
-     }
-
-     private boolean snakeCoiled(){
-          Point head = snake.getHead();
-          for(Point eachSegment : snake.getSegments()){
-               if(head.equals(eachSegment) && head != eachSegment){
-                    return true;
-               }
           }
           return false;
      }

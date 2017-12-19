@@ -38,6 +38,9 @@ public class Snake{
      }
 
      public int getSize(){
+          if(capturedTarget){
+               return segments.size()+1;
+          }
           return segments.size();
      }
 
@@ -47,6 +50,16 @@ public class Snake{
 
      public int getDirectionHeading(){
           return directionHeading;
+     }
+
+     public boolean isCoiled(){
+          Point head = getHead();
+          for(Point eachSegment : getSegments()){
+               if(head.equals(eachSegment) && head != eachSegment){
+                    return true;
+               }
+          }
+          return false;
      }
 
      private void moveHead(){

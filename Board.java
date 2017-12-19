@@ -62,11 +62,12 @@ public class Board extends JPanel{
 
     private void drawBorders(Graphics g){
          g.setColor(borderColor);
+         int borderBrickSize = squareSize-1;
          for(int i = 0; i <=boardWidth; i++){
-              g.fillRect(i*squareSize, (boardHeight)*squareSize, squareSize, squareSize);
-              g.fillRect((boardWidth)*squareSize, i*squareSize, squareSize, squareSize);
-              g.fillRect(i*squareSize, 0, squareSize, squareSize);
-              g.fillRect(0, i*squareSize, squareSize, squareSize);
+              g.fillRect(i*squareSize, (boardHeight)*squareSize, borderBrickSize, borderBrickSize);
+              g.fillRect((boardWidth)*squareSize, i*squareSize, borderBrickSize, borderBrickSize);
+              g.fillRect(i*squareSize, 0, borderBrickSize, borderBrickSize);
+              g.fillRect(0, i*squareSize, borderBrickSize, borderBrickSize);
          }
     }
 

@@ -35,12 +35,13 @@ public class SnakeGUI{
           containerJF = new JFrame("snake");
           setPanels();
           containerJF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          containerJF.setMinimumSize(new Dimension(625, 685));
+          containerJF.setMinimumSize(new Dimension(656, 715));
           containerJF.setResizable(false);
           containerJF.setLayout(new BorderLayout());
           containerJF.add(gamePanel, BorderLayout.CENTER);
           setFrameListener();
           containerJF.setVisible(true);
+          containerJF.setBackground(Color.BLACK);
      }
 
      private void setPanels(){
@@ -65,7 +66,7 @@ public class SnakeGUI{
           containerJF.addKeyListener(new KeyListener(){
                @Override
                public void keyPressed(KeyEvent e) {
-                   game.steerSnake(e.getKeyCode());
+                   game.addInputToBeExecuted(e.getKeyCode());
               }
               @Override
               public void keyTyped(KeyEvent e) {}

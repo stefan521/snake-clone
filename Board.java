@@ -72,9 +72,9 @@ public class Board extends JPanel{
     }
 
      private void initialiseBoard(){
-          boardWidth = 30;
-          boardHeight = 30;
-          squareSize = 20;
+          boardWidth = 25;
+          boardHeight = 25;
+          squareSize = 25;
           bgColor = new Color(0, 0, 0);
           borderColor = new Color(122, 131, 145);
           snakeBodyColor = new Color(27, 104, 229);

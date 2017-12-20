@@ -41,13 +41,12 @@ public class SnakeGUI{
           containerJF.add(gamePanel, BorderLayout.CENTER);
           setFrameListener();
           containerJF.setVisible(true);
-          containerJF.setBackground(Color.BLACK);
      }
 
      private void setPanels(){
           gamePanel = new JPanel();
           Font scoreFont = new Font("Tahoma", Font.BOLD, 20);
-          scoreLabel = new JLabel("size: 0", JLabel.CENTER);
+          scoreLabel = new JLabel("size: 3", JLabel.CENTER);
           scoreLabel.setForeground(new Color(131, 211, 97));
           scoreLabel.setFont(scoreFont);
           JPanel scorePanel = new JPanel();

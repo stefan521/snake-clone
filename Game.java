@@ -19,29 +19,31 @@ public class Game {
      }
 
      public void addInputToBeExecuted(int keyCode){
-          if(keyPressedTisTurn && inputs.size() < 2){
-               inputs.add(keyCode);
-          } else {
-               inputs.clear();
-               inputs.add(keyCode);
+          if(inputs.size() < 2){
+               if(keyPressedTisTurn) {
+                    inputs.add(keyCode);
+               } else{
+                    inputs.clear();
+                    inputs.add(keyCode);
+                    keyPressedTisTurn = true;
+               }
           }
      }
 
     private void steerSnake(int keyCode) {
-            if (keyCode == KeyEvent.VK_UP && !keyPressedTisTurn) {
+            if (keyCode == KeyEvent.VK_UP) {
                  snake.changeDirection(snake.DOWN);
             }
-            else if (keyCode == KeyEvent.VK_DOWN && !keyPressedTisTurn) {
+            else if (keyCode == KeyEvent.VK_DOWN) {
                  snake.changeDirection(snake.UP);
             }
-            else if (keyCode == KeyEvent.VK_LEFT && !keyPressedTisTurn) {
+            else if (keyCode == KeyEvent.VK_LEFT) {
                  snake.changeDirection(snake.LEFT);
             }
-            else if (keyCode == KeyEvent.VK_RIGHT && !keyPressedTisTurn) {
+            else if (keyCode == KeyEvent.VK_RIGHT) {
                  snake.changeDirection(snake.RIGHT);
             }
             inputs.remove(0);
-            keyPressedTisTurn = true;
     }
 
      private void initialise(){

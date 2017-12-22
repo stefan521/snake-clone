@@ -55,7 +55,7 @@ public class Target{
           int y = randomObj.nextInt(maxHeight);
           Point candidatePoint = new Point(x, y);
           timeLived = 0;
-          if(x < 1 || y < 1 ||
+          if(x < 1 || y < 2 ||
              x > maxWidth || y > maxHeight ||
               isRestricted(candidatePoint)){
                spawn();

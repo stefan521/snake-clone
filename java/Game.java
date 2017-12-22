@@ -16,6 +16,22 @@ public class Game {
 
      public Game(){
           initialise();
+          startGame();
+     }
+
+     public void startGame(){
+          snake.resetSnake();
+          timer.restart();
+     }
+
+     public void pause(){
+          timer.stop();
+     }
+
+     public void resume(){
+          if(isGameOver() == false){
+               timer.restart();
+          }
      }
 
      public void addInputToBeExecuted(int keyCode){
@@ -49,10 +65,11 @@ public class Game {
      private void initialise(){
           snake = new Snake();
           inputs = new ArrayList<Integer>();
-          gui = new SnakeGUI(snake, this);
+          gui = new SnakeGUI(this);
           board = gui.getBoard();
-          target = new Target(board.getBoardWidth()-2, board.getBoardHeight()-2, 30);
+          target = new Target(board.getBoardWidth()-1, board.getBoardHeight()-1, 30);
           target.setRestrictedPoints(snake.getSegments());
+          board.setSnake(snake);
           board.setTarget(target);
           setTimer(100);
      }
@@ -62,18 +79,18 @@ public class Game {
           if(inputs.size() > 0){
                steerSnake(inputs.get(0));
           }
-          if(snakeCollectedTarget()){
+          if(collectsTarget()){
                snake.grow();
                target.spawn();
-               gui.showScore(snake.getSize());
           }
+
           if(isGameOver()){
                timer.stop();
           } else {
                snake.move();
                target.increaseTimeLived();
           }
-          board.updateGui();
+          board.repaint();
      }
 
      private boolean isGameOver(){
@@ -85,14 +102,14 @@ public class Game {
 
      private boolean snakeIsOutOfBound(){
           Point head = snake.getHead();
-          if(head.getX()>=board.getBoardWidth() || head.getY()>=board.getBoardHeight() ||
-             head.getX()<1 || head.getY()<1){
+          if(head.getX()>board.getBoardWidth()-1 || head.getY()>board.getBoardHeight() ||
+             head.getX()<1 || head.getY()<2){
                   return true;
              }
           return false;
      }
 
-     private boolean snakeCollectedTarget(){
+     private boolean collectsTarget(){
           if(snake.getHead().equals(target.getPosition())){
                return true;
           }
@@ -106,7 +123,6 @@ public class Game {
                     progress();
                }
           });
-          timer.start();
      }
 
      public static void main(String[] args){

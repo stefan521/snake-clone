@@ -11,7 +11,16 @@ public class Snake{
      private boolean capturedTarget;
 
      public Snake(){
-          putSnakeOnStartPosition();
+          resetSnake();
+     }
+
+     public void resetSnake(){
+          segments = new ArrayList<Point>();
+          segments.add(new Point(3,3));
+          segments.add(new Point(3,4));
+          segments.add(new Point(3,5));
+          directionHeading = UP;
+          capturedTarget = false;
      }
 
      public void changeDirection(int direction){
@@ -72,17 +81,5 @@ public class Snake{
           else if(directionHeading == LEFT) x -= 1;
           segments.add(new Point(x, y));
      }
-
-     private void putSnakeOnStartPosition(){
-          segments = new ArrayList<Point>();
-          segments.add(new Point(3,3));
-          segments.add(new Point(3,4));
-          segments.add(new Point(3,5));
-          directionHeading = UP;
-          capturedTarget = false;
-     }
-
-     public String toString(){
-          return segments.toString();
-     }
+     
 }

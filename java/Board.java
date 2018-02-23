@@ -14,38 +14,22 @@ public class Board extends JPanel{
      private int boardWidth;
      private int boardHeight;
      private int squareSize;
+     private int snakeThickness;
      private Snake snake;
      private Target target;
      private Font scoreFont;
      private BufferedImage targetImage;
-     private BufferedImage borderImage;
      private BufferedImage snakeImage;
-     private BufferedImage grassImage;
      private BufferedImage headImage;
+     private BufferedImage grassImage;
+     private BufferedImage borderImage;
 
      public Board(){
           initialiseBoard();
      }
 
-     public int getBoardWidth(){
-          return boardWidth;
-     }
-
-     public int getBoardHeight(){
-          return boardHeight;
-     }
-
-     public void setTarget(Target target){
-          this.target = target;
-     }
-
-     public void setSnake(Snake snake){
-          this.snake = snake;
-     }
-
      public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int snakeThickness = squareSize-2;
         g.drawImage(grassImage, 0 ,0 ,null);
         g.drawImage(borderImage, 0, 25, null);
 
@@ -71,28 +55,20 @@ public class Board extends JPanel{
     }
 
      private void initialiseBoard(){
-          setOriginalAspect();
-          //setCustomAspect();
+          setImages();
           boardWidth = 25;
           boardHeight = 25;
           squareSize = 25;
+          snakeThickness = squareSize-2;
           scoreFont = new Font("Tahoma", Font.BOLD, 20);
      }
 
-     private void setOriginalAspect(){
+     private void setImages(){
           targetImage = readBfiFromPath("../resources/originalTarget.png");
           borderImage = readBfiFromPath("../resources/originalBorder.png");
           snakeImage = readBfiFromPath("../resources/originalSnake.png");
           grassImage = readBfiFromPath("../resources/originalBG.png");
           headImage = readBfiFromPath("../resources/originalSnake.png");
-     }
-
-     private void setCustomAspect(){
-          targetImage = readBfiFromPath("../resources/target.png");
-          borderImage = readBfiFromPath("../resources/border.png");
-          snakeImage = readBfiFromPath("../resources/snake.png");
-          grassImage = readBfiFromPath("../resources/background.png");
-          headImage = readBfiFromPath("../resources/head.png");
      }
 
      private BufferedImage readBfiFromPath(String path){
@@ -105,6 +81,22 @@ public class Board extends JPanel{
          }
 
          return null;
+    }
+
+    public int getBoardWidth(){
+         return boardWidth;
+    }
+
+    public int getBoardHeight(){
+         return boardHeight;
+    }
+
+    public void setTarget(Target target){
+         this.target = target;
+    }
+
+    public void setSnake(Snake snake){
+         this.snake = snake;
     }
 
 }

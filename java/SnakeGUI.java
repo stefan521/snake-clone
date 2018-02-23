@@ -42,7 +42,6 @@ public class SnakeGUI{
           gamePanel = new JPanel();
           gamePanel.setLayout(new BorderLayout());
           gamePanel.add(board, BorderLayout.CENTER);
-
           gameOverPanel = new JPanel();
           menuPanel = new JPanel();
      }

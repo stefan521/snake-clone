@@ -46,19 +46,21 @@ public class Game {
           }
      }
 
-    private void steerSnake(int keyCode) {
-            if (keyCode == KeyEvent.VK_UP) {
-                 snake.changeDirection(snake.DOWN);
-            }
-            else if (keyCode == KeyEvent.VK_DOWN) {
-                 snake.changeDirection(snake.UP);
-            }
-            else if (keyCode == KeyEvent.VK_LEFT) {
-                 snake.changeDirection(snake.LEFT);
-            }
-            else if (keyCode == KeyEvent.VK_RIGHT) {
-                 snake.changeDirection(snake.RIGHT);
-            }
+     private void steerSnake(int keyCode) {
+          switch(keyCode){
+               /*UP and DOWN are reversed because the (0,0) point is
+               the upper left corner when representing the game on a panel and
+               the lower left corner in the usual system of coordinates.
+               */
+               case KeyEvent.VK_UP : snake.changeDirection(snake.DOWN);
+                                     break;
+               case KeyEvent.VK_DOWN : snake.changeDirection(snake.UP);
+                                       break;
+               case KeyEvent.VK_LEFT : snake.changeDirection(snake.LEFT);
+                                       break;
+               case KeyEvent.VK_RIGHT : snake.changeDirection(snake.RIGHT);
+                                        break;
+          }
             inputs.remove(0);
     }
 

@@ -3,10 +3,10 @@ import java.awt.Point;
 
 public class Snake{
      private ArrayList<Point> segments;
-     public final int UP = 2;
-     public final int DOWN = -2;
-     public final int RIGHT = 1;
-     public final int LEFT = -1;
+     public static final int UP = 2;
+     public static final int DOWN = -2;
+     public static final int RIGHT = 1;
+     public static final int LEFT = -1;
      private int directionHeading;
      private boolean capturedTarget;
 
@@ -81,5 +81,5 @@ public class Snake{
           else if(directionHeading == LEFT) x -= 1;
           segments.add(new Point(x, y));
      }
-     
+
 }

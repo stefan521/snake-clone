@@ -3,74 +3,56 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 public class Target{
-     private Point position;
-     private int maxWidth;
-     private int maxHeight;
-     private Random randomObj;
-     private int timeToLive;
-     private int timeLived;
-     private ArrayList<Point> restrictedPoints;
 
-     public Target(int maxWidth, int maxHeight, int timeToLive){
-          this.maxWidth = maxWidth;
-          this.maxHeight = maxHeight;
-          this.timeToLive = timeToLive;
-          randomObj = new Random();
-          position = new Point();
-          restrictedPoints = new ArrayList<Point>();
-          spawn();
-     }
+   private static int maxWidth;
+   private static int maxHeight;
+   private int timeToLive;
+   private int timeLived;
+   private static int minWidth;
+   private static int minHeight;
+   private static Random randomObj;
+   private Point position;
 
-     public void setRestrictedPoints(ArrayList<Point> pointList){
-          restrictedPoints = pointList;
-     }
+   public Target(int minWidth, int maxWidth, int minHeight, int maxHeight){
+      this.minWidth = minWidth;
+      this.maxWidth = maxWidth;
+      this.minHeight = minHeight;
+      this.maxHeight = maxHeight;
+      randomObj = new Random();
+      this.timeToLive = 30;
+      spawn();
+   }
 
-     public void increaseTimeLived(){
-          timeLived++;
-          if(isExpired()){
-               spawn();
-          }
-     }
+   public void increaseTimeLived(){
+      timeLived++;
+      if(isExpired()){
+         spawn();
+      }
+   }
 
-     public boolean isExpired(){
-          if(timeToLive == timeLived)
-               return true;
-          return false;
-     }
+   public boolean isExpired(){
+      if(timeToLive == timeLived)
+      return true;
+      return false;
+   }
 
-     public Point getPosition(){
-          return position;
-     }
+   public Point getPosition(){
+      return position;
+   }
 
-     public int getX(){
-          return (int)position.getX();
-     }
+   public void spawn(){
+      int x = generateIntGreaterThan(minWidth);
+      int y = generateIntGreaterThan(minHeight);
+      position = new Point(x, y);
+      timeLived = 0;
+   }
 
-     public int getY(){
-          return (int)position.getY();
-     }
-
-     public void spawn(){
-          int x = randomObj.nextInt(maxWidth);
-          int y = randomObj.nextInt(maxHeight);
-          Point candidatePoint = new Point(x, y);
-          timeLived = 0;
-          if(x < 1 || y < 2 ||
-             x > maxWidth || y > maxHeight ||
-              isRestricted(candidatePoint)){
-               spawn();
-          } else {
-               position.setLocation(candidatePoint);
-          }
-
-     }
-
-     private boolean isRestricted(Point point){
-          for(Point restrictedP : restrictedPoints)
-               if(restrictedP.getX() == point.getX() &&
-                  restrictedP.getY() == point.getY())
-                  return true;
-          return false;
-     }
+   public int generateIntGreaterThan(int minimumValue){
+      int valueToGenerate = randomObj.nextInt(maxWidth);
+      while(valueToGenerate < minimumValue){
+         valueToGenerate = randomObj.nextInt(maxWidth);
+      }
+      return valueToGenerate;
+   }
 
 }

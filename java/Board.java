@@ -11,92 +11,88 @@ import javax.imageio.ImageIO;
 import java.awt.Font;
 
 public class Board extends JPanel{
-     private int boardWidth;
-     private int boardHeight;
-     private int squareSize;
-     private int snakeThickness;
-     private Snake snake;
-     private Target target;
-     private Font scoreFont;
-     private BufferedImage targetImage;
-     private BufferedImage snakeImage;
-     private BufferedImage headImage;
-     private BufferedImage grassImage;
-     private BufferedImage borderImage;
+   
+   private int boardWidth;
+   private int boardHeight;
+   private int squareSize;
+   private int snakeThickness;
+   private Snake snake;
+   private Target target;
+   private Font scoreFont;
+   private BufferedImage targetImage;
+   private BufferedImage snakeImage;
+   private BufferedImage grassImage;
+   private BufferedImage borderImage;
 
-     public Board(){
-          initialiseBoard();
-     }
+   public Board(){
+      this.target = target;
+      initialiseBoard();
+   }
 
-     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(grassImage, 0 ,0 ,null);
-        g.drawImage(borderImage, 0, 25, null);
+   public void setSnake(Snake snake){
+      this.snake = snake;
+   }
 
-        if(target != null){
-             int targetX = target.getX()*squareSize;
-             int targetY = target.getY()*squareSize;
-             g.drawImage(targetImage, targetX, targetY, null);
-        }
+   public void setTarget(Target target){
+      this.target = target;
+   }
 
-        for(Point segment : snake.getSegments()){
-             int snakeX = (int)segment.getX()*squareSize;
-             int snakeY = (int)segment.getY()*squareSize;
-             if(snake.getHead().equals(segment)){
-                  g.drawImage(headImage, snakeX, snakeY, null);
-             } else {
-                  g.drawImage(snakeImage, snakeX, snakeY , null);
-             }
-        }
+   public void paintComponent(Graphics g) {
+      super.paintComponent(g);
+      //paint background and border
+      g.drawImage(grassImage, 0 ,0 ,null);
+      g.drawImage(borderImage, 0, 25, null);
+      //paint target
+      if(target != null){
+         int targetX = (int)target.getPosition().getX()*squareSize;
+         int targetY = (int)target.getPosition().getY()*squareSize;
+         g.drawImage(targetImage, targetX, targetY, null);
+      }
+      //paint snake
+      for(Point segment : snake.getSegments()){
+         int snakeX = (int)segment.getX()*squareSize;
+         int snakeY = (int)segment.getY()*squareSize;
+         g.drawImage(snakeImage, snakeX, snakeY , null);
+      }
+      //paint score at the top
+      g.setFont(scoreFont);
+      g.setColor(Color.BLACK);
+      g.drawString("Size "+ snake.getSize(), 310, 25);
+   }
 
-        g.setFont(scoreFont);
-        g.setColor(Color.BLACK);
-        g.drawString("Size "+ snake.getSize(), 310, 25);
-    }
+   private void initialiseBoard(){
+      setImages();
+      boardWidth = 25;
+      boardHeight = 25;
+      squareSize = 25;
+      snakeThickness = squareSize-2;
+      scoreFont = new Font("Tahoma", Font.BOLD, 20);
+   }
+   //read images from the resource file
+   private void setImages(){
+      targetImage = readBfiFromPath("../resources/originalTarget.png");
+      borderImage = readBfiFromPath("../resources/originalBorder.png");
+      snakeImage = readBfiFromPath("../resources/originalSnake.png");
+      grassImage = readBfiFromPath("../resources/originalBG.png");
+   }
+   //convenient method for reading images
+   private BufferedImage readBfiFromPath(String path){
+      BufferedImage bfi;
+      try{
+         bfi = ImageIO.read(new File(path));
+         return bfi;
+      } catch (IOException e) {
+         System.out.println("error reading bfi");
+      }
+      return null;
+   }
 
-     private void initialiseBoard(){
-          setImages();
-          boardWidth = 25;
-          boardHeight = 25;
-          squareSize = 25;
-          snakeThickness = squareSize-2;
-          scoreFont = new Font("Tahoma", Font.BOLD, 20);
-     }
+   public int getBoardWidth(){
+      return boardWidth;
+   }
 
-     private void setImages(){
-          targetImage = readBfiFromPath("../resources/originalTarget.png");
-          borderImage = readBfiFromPath("../resources/originalBorder.png");
-          snakeImage = readBfiFromPath("../resources/originalSnake.png");
-          grassImage = readBfiFromPath("../resources/originalBG.png");
-          headImage = readBfiFromPath("../resources/originalSnake.png");
-     }
-
-     private BufferedImage readBfiFromPath(String path){
-         BufferedImage bfi;
-         try{
-              bfi = ImageIO.read(new File(path));
-              return bfi;
-         } catch (IOException e) {
-              System.out.println("error");
-         }
-
-         return null;
-    }
-
-    public int getBoardWidth(){
-         return boardWidth;
-    }
-
-    public int getBoardHeight(){
-         return boardHeight;
-    }
-
-    public void setTarget(Target target){
-         this.target = target;
-    }
-
-    public void setSnake(Snake snake){
-         this.snake = snake;
-    }
+   public int getBoardHeight(){
+      return boardHeight;
+   }
 
 }

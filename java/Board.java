@@ -70,10 +70,10 @@ public class Board extends JPanel{
    }
    //read images from the resource file
    private void setImages(){
-      targetImage = readBfiFromPath("../resources/originalTarget.png");
-      borderImage = readBfiFromPath("../resources/originalBorder.png");
-      snakeImage = readBfiFromPath("../resources/originalSnake.png");
-      grassImage = readBfiFromPath("../resources/originalBG.png");
+      targetImage = readBfiFromPath("./resources/originalTarget.png");
+      borderImage = readBfiFromPath("./resources/originalBorder.png");
+      snakeImage = readBfiFromPath("./resources/originalSnake.png");
+      grassImage = readBfiFromPath("./resources/originalBG.png");
    }
    //convenient method for reading images
    private BufferedImage readBfiFromPath(String path){

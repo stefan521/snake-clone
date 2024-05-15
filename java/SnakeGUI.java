@@ -76,13 +76,13 @@ public class SnakeGUI{
                the upper left corner when representing the game on a panel and
                the lower left corner in the usual system of coordinates.
                */
-               case KeyEvent.VK_UP : direction = snake.DOWN;
+               case KeyEvent.VK_W : direction = snake.DOWN;
                break;
-               case KeyEvent.VK_DOWN : direction = snake.UP;
+               case KeyEvent.VK_S : direction = snake.UP;
                break;
-               case KeyEvent.VK_LEFT : direction = snake.LEFT;
+               case KeyEvent.VK_A : direction = snake.LEFT;
                break;
-               case KeyEvent.VK_RIGHT : direction = snake.RIGHT;
+               case KeyEvent.VK_D : direction = snake.RIGHT;
                break;
             }
             game.addInputToBeExecuted(direction);

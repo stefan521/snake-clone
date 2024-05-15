@@ -68,7 +68,7 @@ public class Game {
       topWallRestriction, bottomWallRestriction);
       gui.setTarget(target);
       gui.setSnake(snake);
-      setTimer(100);
+      setTimer(69);
    }
 
    private void progress(){

@@ -20,7 +20,7 @@ public class Snake{
       segments.add(new Point(3,3));
       segments.add(new Point(3,4));
       segments.add(new Point(3,5));
-      directionHeading = UP;
+      directionHeading = DOWN;
       capturedTarget = false;
    }
 
@@ -78,8 +78,8 @@ public class Snake{
       Point head = segments.get(segments.size()-1);
       int x = (int)head.getX();
       int y = (int)head.getY();
-      if(directionHeading == UP) y += 1;
-      else if(directionHeading == DOWN) y -= 1;
+      if(directionHeading == UP) y -= 1;
+      else if(directionHeading == DOWN) y += 1;
       else if(directionHeading == RIGHT) x += 1 ;
       else if(directionHeading == LEFT) x -= 1;
       segments.add(new Point(x, y));

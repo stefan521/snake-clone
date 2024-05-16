@@ -76,9 +76,9 @@ public class SnakeGUI{
                the upper left corner when representing the game on a panel and
                the lower left corner in the usual system of coordinates.
                */
-               case KeyEvent.VK_W : direction = snake.DOWN;
+               case KeyEvent.VK_W : direction = snake.UP;
                break;
-               case KeyEvent.VK_S : direction = snake.UP;
+               case KeyEvent.VK_S : direction = snake.DOWN;
                break;
                case KeyEvent.VK_A : direction = snake.LEFT;
                break;

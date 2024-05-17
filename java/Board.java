@@ -74,20 +74,18 @@ public class Board extends JPanel {
 
     //read images from the resource file
     private void setImages() {
-        targetImage = readBfiFromPath("./resources/originalTarget.png");
-        borderImage = readBfiFromPath("./resources/originalBorder.png");
-        snakeImage = readBfiFromPath("./resources/originalSnake.png");
-        grassImage = readBfiFromPath("./resources/originalBG.png");
+        targetImage = readBufferedImage("./resources/originalTarget.png");
+        borderImage = readBufferedImage("./resources/originalBorder.png");
+        snakeImage = readBufferedImage("./resources/originalSnake.png");
+        grassImage = readBufferedImage("./resources/originalBG.png");
     }
 
     //convenient method for reading images
-    private BufferedImage readBfiFromPath(String path) {
-        BufferedImage bfi;
+    private BufferedImage readBufferedImage(String path) {
         try {
-            bfi = ImageIO.read(new File(path));
-            return bfi;
+            return ImageIO.read(new File(path));
         } catch (IOException e) {
-            System.out.println("error reading bfi");
+            e.printStackTrace();
         }
         return null;
     }

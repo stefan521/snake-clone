@@ -1,133 +1,119 @@
 import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Point;
 import java.util.ArrayList;
 
 public class Game {
-   
-   private Snake snake;
-   private Board board;
-   private SnakeGUI gui;
-   private Target target;
-   private Timer timer;
-   private boolean keyPressedTisTurn;
-   private ArrayList<Integer> inputs;
-   private int leftWallRestriction;
-   private int bottomWallRestriction;
-   private int rightWallRestriction;
-   private int topWallRestriction;
 
-   public Game(){
-      initialise();
-      startGame();
-   }
+    private Snake snake;
+    private Board board;
+    private Target target;
+    private Timer timer;
+    private boolean keyPressedTisTurn;
+    private ArrayList<Integer> inputs;
+    private int leftWallRestriction;
+    private int bottomWallRestriction;
+    private int rightWallRestriction;
+    private int topWallRestriction;
 
-   public void startGame(){
-      snake.resetSnake();
-      timer.restart();
-   }
+    public Game() {
+        initialise();
+        startGame();
+    }
 
-   public void pause(){
-      timer.stop();
-   }
+    public void startGame() {
+        snake.resetSnake();
+        timer.restart();
+    }
 
-   public void resume(){
-      if(isGameOver() == false){
-         timer.restart();
-      }
-   }
+    public void pause() {
+        timer.stop();
+    }
 
-   public void addInputToBeExecuted(int keyCode){
-      if(inputs.size() < 2){
-         if(keyPressedTisTurn) {
-            inputs.add(keyCode);
-         } else{
-            inputs.clear();
-            inputs.add(keyCode);
-            keyPressedTisTurn = true;
-         }
-      }
-   }
+    public void resume() {
+        if (!isGameOver()) {
+            timer.restart();
+        }
+    }
 
-   private void steerSnake(int direction) {
-      snake.changeDirection(direction);
-      inputs.remove(0);
-   }
+    public void addInputToBeExecuted(int keyCode) {
+        if (inputs.size() < 2) {
+            if (keyPressedTisTurn) {
+                inputs.add(keyCode);
+            } else {
+                inputs.clear();
+                inputs.add(keyCode);
+                keyPressedTisTurn = true;
+            }
+        }
+    }
 
-   private void initialise(){
-      inputs = new ArrayList<Integer>();
-      gui = new SnakeGUI(this);
-      board = gui.getBoard();
-      leftWallRestriction = 1;
-      bottomWallRestriction = board.getBoardHeight()-1;
-      rightWallRestriction = board.getBoardWidth()-1;
-      topWallRestriction = 2;
-      snake = new Snake();
-      target = new Target(leftWallRestriction, rightWallRestriction,
-      topWallRestriction, bottomWallRestriction);
-      gui.setTarget(target);
-      gui.setSnake(snake);
-      setTimer(69);
-   }
+    private void steerSnake(int direction) {
+        snake.changeDirection(direction);
+        inputs.remove(0);
+    }
 
-   private void progress(){
-      keyPressedTisTurn = false;
+    private void initialise() {
+        inputs = new ArrayList<>();
+        SnakeGUI gui = new SnakeGUI(this);
+        board = gui.getBoard();
+        leftWallRestriction = 1;
+        bottomWallRestriction = board.getBoardHeight() - 1;
+        rightWallRestriction = board.getBoardWidth() - 1;
+        topWallRestriction = 2;
+        snake = new Snake();
+        target = new Target(
+                leftWallRestriction,
+                rightWallRestriction,
+                topWallRestriction
+        );
+        gui.setTarget(target);
+        gui.setSnake(snake);
+        setTimer(690);
+    }
 
-      if(inputs.size() > 0){
-         steerSnake(inputs.get(0));
-      }
+    private void progress() {
+        keyPressedTisTurn = false;
 
-      if(isSnakeCollectingTarget()){
-         snake.grow();
-         target.spawn();
-      }
+        if (!inputs.isEmpty()) {
+            steerSnake(inputs.get(0));
+        }
 
-      if(isGameOver()){
-         timer.stop();
-      } else {
-         snake.move();
-         target.increaseTimeLived();
-      }
+        if (isSnakeCollectingTarget()) {
+            snake.grow();
+            target.spawn();
+        }
 
-      board.repaint();
-   }
+        if (isGameOver()) {
+            timer.stop();
+        } else {
+            snake.move();
+            target.increaseTimeLived();
+        }
 
-   private boolean isGameOver(){
-      if(snake.isCoiled() || isSnakeOutOfBounds()){
-         return true;
-      }
-      return false;
-   }
+        board.repaint();
+    }
 
-   private boolean isSnakeOutOfBounds(){
-      Point head = snake.getHead();
-      if(head.getX() > rightWallRestriction ||
-         head.getX() < leftWallRestriction ||
-         head.getY() < topWallRestriction ||
-         head.getY() > bottomWallRestriction + 1){
-         return true;
-      }
-      return false;
-   }
+    private boolean isGameOver() {
+        return snake.isCoiled() || isSnakeOutOfBounds();
+    }
 
-   private boolean isSnakeCollectingTarget(){
-      if(snake.getHead().equals(target.getPosition())){
-         return true;
-      }
-      return false;
-   }
+    private boolean isSnakeOutOfBounds() {
+        Point head = snake.getHead();
+        return head.getX() > rightWallRestriction ||
+                head.getX() < leftWallRestriction ||
+                head.getY() < topWallRestriction ||
+                head.getY() > bottomWallRestriction + 1;
+    }
 
-   private void setTimer(int delay){
-      timer = new Timer(delay, new ActionListener(){
-         @Override
-         public void actionPerformed(ActionEvent e){
-            progress();
-         }
-      });
-   }
+    private boolean isSnakeCollectingTarget() {
+        return snake.getHead().equals(target.getPosition());
+    }
 
-   public static void main(String[] args){
-      Game game = new Game();
-   }
+    private void setTimer(int delay) {
+        timer = new Timer(delay, e -> progress());
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game();
+    }
 }

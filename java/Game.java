@@ -68,7 +68,7 @@ public class Game {
         );
         gui.setTarget(target);
         gui.setSnake(snake);
-        setTimer(690);
+        setTimer(69);
     }
 
     private void progress() {

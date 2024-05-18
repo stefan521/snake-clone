@@ -68,22 +68,20 @@ public class SnakeGUI {
     }
 
     private void sendInputToGame(int keyCode) {
-        int direction = snake.getDirectionHeading();
         switch (keyCode) {
             case KeyEvent.VK_W:
-                direction = Snake.UP;
+                game.addDirectionInput(Direction.UP);
                 break;
             case KeyEvent.VK_S:
-                direction = Snake.DOWN;
+                game.addDirectionInput(Direction.DOWN);
                 break;
             case KeyEvent.VK_A:
-                direction = Snake.LEFT;
+                game.addDirectionInput(Direction.LEFT);
                 break;
             case KeyEvent.VK_D:
-                direction = Snake.RIGHT;
+                game.addDirectionInput(Direction.RIGHT);
                 break;
         }
-        game.addInputToBeExecuted(direction);
     }
 
 }

@@ -9,7 +9,7 @@ public class Game {
     private Target target;
     private Timer timer;
     private boolean keyPressedTisTurn;
-    private ArrayList<Integer> inputs;
+    private ArrayList<Direction> inputs;
     private int leftWallRestriction;
     private int bottomWallRestriction;
     private int rightWallRestriction;
@@ -35,20 +35,20 @@ public class Game {
         }
     }
 
-    public void addInputToBeExecuted(int keyCode) {
+    public void addDirectionInput(Direction direction) {
         if (inputs.size() < 2) {
             if (keyPressedTisTurn) {
-                inputs.add(keyCode);
+                inputs.add(direction);
             } else {
                 inputs.clear();
-                inputs.add(keyCode);
+                inputs.add(direction);
                 keyPressedTisTurn = true;
             }
         }
     }
 
-    private void steerSnake(int direction) {
-        snake.changeDirection(direction);
+    private void steerSnake(Direction direction) {
+        snake.setDirection(direction);
         inputs.remove(0);
     }
 

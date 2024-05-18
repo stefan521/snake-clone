@@ -4,11 +4,7 @@ import java.awt.Point;
 public class Snake {
 
     private ArrayList<Point> segments;
-    public static final int UP = 2;
-    public static final int DOWN = -2;
-    public static final int RIGHT = 1;
-    public static final int LEFT = -1;
-    private int directionHeading;
+    private Direction direction;
     private boolean capturedTarget;
 
     public Snake() {
@@ -20,23 +16,12 @@ public class Snake {
         segments.add(new Point(3, 3));
         segments.add(new Point(3, 4));
         segments.add(new Point(3, 5));
-        directionHeading = DOWN;
+        direction = Direction.DOWN;
         capturedTarget = false;
     }
 
-    public void changeDirection(int direction) {
-        if (direction == UP && directionHeading != DOWN) {
-            directionHeading = UP;
-        }
-        if (direction == DOWN && directionHeading != UP) {
-            directionHeading = DOWN;
-        }
-        if (direction == RIGHT && directionHeading != LEFT) {
-            directionHeading = RIGHT;
-        }
-        if (direction == LEFT && directionHeading != RIGHT) {
-            directionHeading = LEFT;
-        }
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public void grow() {
@@ -48,18 +33,15 @@ public class Snake {
     }
 
     public int getSize() {
-        if (capturedTarget) {
-            return segments.size() + 1;
-        }
-        return segments.size();
+        return capturedTarget ? segments.size() + 1 : segments.size();
     }
 
     public ArrayList<Point> getSegments() {
         return segments;
     }
 
-    public int getDirectionHeading() {
-        return directionHeading;
+    public Direction getDirection() {
+        return direction;
     }
 
     public boolean isCoiled() {
@@ -74,6 +56,7 @@ public class Snake {
 
     public void move() {
         moveHead();
+
         if (capturedTarget) {
             capturedTarget = false;
         } else {
@@ -85,11 +68,21 @@ public class Snake {
         Point head = segments.get(segments.size() - 1);
         int x = (int) head.getX();
         int y = (int) head.getY();
-        if (directionHeading == UP) y -= 1;
-        else if (directionHeading == DOWN) y += 1;
-        else if (directionHeading == RIGHT) x += 1;
-        else if (directionHeading == LEFT) x -= 1;
-        segments.add(new Point(x, y));
+
+        switch (direction) {
+            case UP:
+                segments.add(new Point(x, y - 1));
+                break;
+            case DOWN:
+                segments.add(new Point(x, y + 1));
+                break;
+            case LEFT:
+                segments.add(new Point(x - 1, y));
+                break;
+            case RIGHT:
+                segments.add(new Point(x + 1, y));
+                break;
+        }
     }
 
 }

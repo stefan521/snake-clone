@@ -1,3 +1,5 @@
+package org.example;
+
 import javax.swing.Timer;
 import java.awt.Point;
 import java.util.ArrayList;

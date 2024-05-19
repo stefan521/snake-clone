@@ -1,3 +1,5 @@
+package org.example;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Point;
@@ -7,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Font;
+import java.util.Objects;
 
 public class Board extends JPanel {
 
@@ -74,16 +77,16 @@ public class Board extends JPanel {
 
     //read images from the resource file
     private void setImages() {
-        targetImage = readBufferedImage("./resources/originalTarget.png");
-        borderImage = readBufferedImage("./resources/originalBorder.png");
-        snakeImage = readBufferedImage("./resources/originalSnake.png");
-        grassImage = readBufferedImage("./resources/originalBG.png");
+        targetImage = readBufferedImage("originalTarget.png");
+        borderImage = readBufferedImage("originalBorder.png");
+        snakeImage = readBufferedImage("originalSnake.png");
+        grassImage = readBufferedImage("originalBG.png");
     }
 
     //convenient method for reading images
     private BufferedImage readBufferedImage(String path) {
         try {
-            return ImageIO.read(new File(path));
+            return ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResource(path)));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,3 +1,5 @@
+package org.example;
+
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.BorderLayout;
@@ -11,7 +13,6 @@ public class SnakeGUI {
     private JFrame containerJF;
     private final Game game;
     private final Board board;
-    private Snake snake;
 
     public SnakeGUI(Game game) {
         board = new Board();
@@ -20,7 +21,6 @@ public class SnakeGUI {
     }
 
     public void setSnake(Snake snake) {
-        this.snake = snake;
         board.setSnake(snake);
     }
 
@@ -51,7 +51,6 @@ public class SnakeGUI {
         gamePanel.add(board, BorderLayout.CENTER);
     }
 
-    //add key listener to the frame
     private void setFrameListener() {
         containerJF.addKeyListener(new KeyListener() {
             @Override

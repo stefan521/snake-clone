@@ -2,6 +2,7 @@ package org.example;
 
 import javax.swing.Timer;
 import java.awt.Point;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
@@ -17,8 +18,8 @@ public class Game {
     private int rightWallRestriction;
     private int topWallRestriction;
 
-    public Game() {
-        initialise();
+    public Game(ResourceManager resourceManager) {
+        initialise(resourceManager);
         startGame();
     }
 
@@ -54,9 +55,9 @@ public class Game {
         inputs.remove(0);
     }
 
-    private void initialise() {
+    private void initialise(ResourceManager resourceManager) {
         inputs = new ArrayList<>();
-        SnakeGUI gui = new SnakeGUI(this);
+        SnakeGUI gui = new SnakeGUI(this, resourceManager);
         board = gui.getBoard();
         leftWallRestriction = 1;
         bottomWallRestriction = board.getBoardHeight() - 1;
@@ -115,7 +116,8 @@ public class Game {
         timer = new Timer(delay, e -> progress());
     }
 
-    public static void main(String[] args) {
-        new Game();
+    public static void main(String[] args) throws IOException {
+        ResourceManager resourceManager = new ResourceManager();
+        new Game(resourceManager);
     }
 }

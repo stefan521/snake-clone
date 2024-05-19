@@ -4,12 +4,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.awt.Font;
-import java.util.Objects;
 
 public class Board extends JPanel {
 
@@ -19,13 +14,15 @@ public class Board extends JPanel {
     private Snake snake;
     private Target target;
     private Font scoreFont;
-    private BufferedImage targetImage;
-    private BufferedImage snakeImage;
-    private BufferedImage grassImage;
-    private BufferedImage borderImage;
+    private ResourceManager resourceManager;
 
-    public Board() {
-        initialiseBoard();
+
+    public Board(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+        boardWidth = 25;
+        boardHeight = 25;
+        squareSize = 25;
+        scoreFont = new Font("Tahoma", Font.BOLD, 20);
     }
 
     public void setSnake(Snake snake) {
@@ -47,50 +44,23 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //paint background and border
-        g.drawImage(grassImage, 0, 0, null);
-        g.drawImage(borderImage, 0, 25, null);
+        g.drawImage(resourceManager.getGrassImage(), 0, 0, null);
+        g.drawImage(resourceManager.getBorderImage(), 0, 25, null);
         //paint target
         if (target != null) {
             int targetX = (int) target.getPosition().getX() * squareSize;
             int targetY = (int) target.getPosition().getY() * squareSize;
-            g.drawImage(targetImage, targetX, targetY, null);
+            g.drawImage(resourceManager.getTargetImage(), targetX, targetY, null);
         }
         //paint snake
         for (Point segment : snake.getSegments()) {
             int snakeX = (int) segment.getX() * squareSize;
             int snakeY = (int) segment.getY() * squareSize;
-            g.drawImage(snakeImage, snakeX, snakeY, null);
+            g.drawImage(resourceManager.getSnakeImage(), snakeX, snakeY, null);
         }
         //paint score at the top
         g.setFont(scoreFont);
         g.setColor(Color.BLACK);
         g.drawString("Size " + snake.getSize(), 310, 25);
     }
-
-    private void initialiseBoard() {
-        setImages();
-        boardWidth = 25;
-        boardHeight = 25;
-        squareSize = 25;
-        scoreFont = new Font("Tahoma", Font.BOLD, 20);
-    }
-
-    //read images from the resource file
-    private void setImages() {
-        targetImage = readBufferedImage("originalTarget.png");
-        borderImage = readBufferedImage("originalBorder.png");
-        snakeImage = readBufferedImage("originalSnake.png");
-        grassImage = readBufferedImage("originalBG.png");
-    }
-
-    //convenient method for reading images
-    private BufferedImage readBufferedImage(String path) {
-        try {
-            return ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemClassLoader().getResource(path)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 }

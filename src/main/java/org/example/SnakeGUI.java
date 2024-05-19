@@ -14,8 +14,8 @@ public class SnakeGUI {
     private final Game game;
     private final Board board;
 
-    public SnakeGUI(Game game) {
-        board = new Board();
+    public SnakeGUI(Game game, ResourceManager resourceManager) {
+        board = new Board(resourceManager);
         this.game = game;
         setFrame();
     }

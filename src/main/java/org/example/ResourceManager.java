@@ -7,16 +7,16 @@ import java.util.Objects;
 
 public class ResourceManager {
 
-    private BufferedImage targetImage;
-    private BufferedImage snakeImage;
-    private BufferedImage grassImage;
-    private BufferedImage borderImage;
+    private final BufferedImage targetImage;
+    private final BufferedImage snakeImage;
+    private final BufferedImage grassImage;
+    private final BufferedImage borderImage;
 
     public ResourceManager() throws IOException {
-        targetImage = readBufferedImage("originalTarget.png");
-        borderImage = readBufferedImage("originalBorder.png");
-        snakeImage = readBufferedImage("originalSnake.png");
-        grassImage = readBufferedImage("originalBG.png");
+        targetImage = readBufferedImage("target.png");
+        borderImage = readBufferedImage("border.png");
+        snakeImage = readBufferedImage("snake.png");
+        grassImage = readBufferedImage("background.png");
     }
 
     public BufferedImage getTargetImage() {

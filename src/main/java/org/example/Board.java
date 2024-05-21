@@ -8,13 +8,13 @@ import java.awt.Font;
 
 public class Board extends JPanel {
 
-    private int boardWidth;
-    private int boardHeight;
-    private int squareSize;
+    private final int boardWidth;
+    private final int boardHeight;
+    private final int squareSize;
     private Snake snake;
     private Target target;
-    private Font scoreFont;
-    private ResourceManager resourceManager;
+    private final Font scoreFont;
+    private final ResourceManager resourceManager;
 
 
     public Board(ResourceManager resourceManager) {

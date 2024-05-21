@@ -1,0 +1,2 @@
+target.time_to_live_in_moves: 30
+snake.speed_in_milliseconds: 70
